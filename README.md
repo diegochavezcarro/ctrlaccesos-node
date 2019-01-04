@@ -9,6 +9,7 @@ npm install
 $env:NODE_ENV="production"
 
 Si no dejar lo que esta por defecto. 
+
 3. Si se quiere setear el secret por variable de entorno, de forma mas segura:
 
 $env:SECRET_CTRL_ACCESS="Secreto de Prueba"
@@ -18,9 +19,11 @@ $env:SECRET_CTRL_ACCESS="Secreto de Prueba"
 npm start
 
 Si el entorno es el default se levantara en puerto 4000, si es produccion sera 80
+
 5. Probar en Postman:
 Hacer un GET a localhost:4000/users
 Va a dar que falta el token.
+
 6. Autenticarse:
 POST a http://localhost:4000/users/authenticate
 Con body en "raw", formato "json":

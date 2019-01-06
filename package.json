@@ -8,7 +8,8 @@
         "url": "https://github.com/diegochavezcarro/ctrlaccesos-node.git"
     },
     "scripts": {
-        "start": "nodemon ./server.js"
+        "start": "nodemon ./server.js",
+        "test": "mocha --timeout 10000"
     },
     "dependencies": {
         "body-parser": "^1.18.3",
@@ -20,6 +21,9 @@
         "rootpath": "^0.1.2"
     },
     "devDependencies": {
-        "nodemon": "^1.18.9"
+        "chai": "^4.2.0",
+        "mocha": "^5.2.0",
+        "nodemon": "^1.18.9",
+        "supertest": "^3.3.0"
     }
 }

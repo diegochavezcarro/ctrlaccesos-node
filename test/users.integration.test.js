@@ -85,12 +85,12 @@ describe('Ctrl Accesos API Tests', function () {
                     done();
                 });
         });
-        it('deberia devolver error 400 login invalido', function (done) {
+        it('deberia devolver error 403 login invalido', function (done) {
             request(app)
                 .post('/users/authenticate')
                 .send({ "username": "tes", "password": "test" })
                 .end(function (err, res) {
-                    expect(res.statusCode).to.equal(400);
+                    expect(res.statusCode).to.equal(403);
                     expect(res.body.message).to.equal('Username or password is incorrect');
                     done();
                 });

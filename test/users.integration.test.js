@@ -4,10 +4,6 @@ const app = require('../server'),
 var expect = chai.expect;
 
 describe('Ctrl Accesos API Tests', function () {
-
-    var task = {
-        name: 'integration test',
-    };
     let token;
     describe('## Obtener usuarios ', function () {
         before((done) => {
@@ -65,7 +61,7 @@ describe('Ctrl Accesos API Tests', function () {
                         .get('/users')
                         .set('Authorization', `Bearer ${token2}`)
                         .end(function (err, res) {
-                            console.log(`Bearer ${token}`);
+                            console.log(`Bearer ${token2}`);
                             expect(res.statusCode).to.equal(200);
                             expect(res.body).to.be.an('array');
                             done();
@@ -73,6 +69,8 @@ describe('Ctrl Accesos API Tests', function () {
                 });
 
         });
+    });
+    describe('## Autenticate ', function () {
     });
     this.afterAll(async () => {
         console.log('afterAll');

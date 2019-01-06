@@ -33,3 +33,9 @@ Con body en "raw", formato "json":
 7. Copiar el token devuelto. Acceder por GET a localhost:4000/users
 Utilizar el tab Authorization, eligiendo "Bearer Token" y pegar el token anterior.
 Deberia devolver los usuarios guardados en el mock.
+
+8. Tests de integracion automatizados con supertest:
+
+npm test
+
+Incluyen cobertura de tests utilizando nyc, ver reporte en coverage/index.html

@@ -3,6 +3,9 @@ const app = require('../server'),
     request = require('supertest');
 var expect = chai.expect;
 
+const usersWhithoutPassword = [{ id: 1, username: 'test', firstName: 'Test', lastName: 'User' },
+{ id: 2, username: 'testa', firstName: 'Testa', lastName: 'Usera' }];
+
 describe('Ctrl Accesos API Tests', function () {
     let token;
     describe('## Obtener usuarios ', function () {
@@ -45,6 +48,7 @@ describe('Ctrl Accesos API Tests', function () {
                     console.log(`Bearer ${token}`);
                     expect(res.statusCode).to.equal(200);
                     expect(res.body).to.be.an('array');
+                    expect(res.body).to.eql(usersWhithoutPassword);
                     done();
                 });
         });
@@ -63,7 +67,7 @@ describe('Ctrl Accesos API Tests', function () {
                         .end(function (err, res) {
                             console.log(`Bearer ${token2}`);
                             expect(res.statusCode).to.equal(200);
-                            expect(res.body).to.be.an('array');
+                            expect(res.body).to.eql(usersWhithoutPassword);
                             done();
                         });
                 });
@@ -71,6 +75,26 @@ describe('Ctrl Accesos API Tests', function () {
         });
     });
     describe('## Autenticate ', function () {
+        it('deberia devolver un token', function (done) {
+            request(app)
+                .post('/users/authenticate')
+                .send({ "username": "test", "password": "test" })
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(200);
+                    expect(res.body.token).to.not.be.null;
+                    done();
+                });
+        });
+        it('deberia devolver error 400 login invalido', function (done) {
+            request(app)
+                .post('/users/authenticate')
+                .send({ "username": "tes", "password": "test" })
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(400);
+                    expect(res.body.message).to.equal('Username or password is incorrect');
+                    done();
+                });
+        });
     });
     this.afterAll(async () => {
         console.log('afterAll');

@@ -4,10 +4,24 @@ const app = require('../server'),
 var expect = chai.expect;
 
 describe('Ctrl Accesos API Tests', function () {
+
     var task = {
         name: 'integration test',
     };
+    let token;
     describe('## Obtener usuarios ', function () {
+        before((done) => {
+            request(app)
+                .post('/users/authenticate')
+                .send({ "username": "test", "password": "test" })
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(200);
+                    expect(res.body.token).to.not.be.null;
+                    token = res.body.token;
+                    done();
+                });
+        });
+
         it('deberia dar error de autenticacion al no pasar token', function (done) {
             request(app)
                 .get('/users')
@@ -28,21 +42,14 @@ describe('Ctrl Accesos API Tests', function () {
                 });
         });
         it('deberia mostrar los usuarios', function (done) {
-            let token;
-            request(app)
-                .post('/users/authenticate')
-                .send({ "username": "test", "password": "test" })
-                .end(function (err, res) {
-                    expect(res.statusCode).to.equal(200);
-                    expect(res.body.token).to.not.be.null;
-                    token = res.body.token;
-                    done();
-                });
+
+
+
             request(app)
                 .get('/users')
-                .set('Authorization', 'Bearer ' + token)
+                .set('Authorization', `Bearer ${token}`)
                 .end(function (err, res) {
-                    console.log(token);
+                    console.log(`Bearer ${token}`);
                     expect(res.statusCode).to.equal(200);
                     expect(res.body).to.be.an('array');
                     done();
@@ -50,9 +57,11 @@ describe('Ctrl Accesos API Tests', function () {
 
         });
     });
-    after(async () => {
+    this.afterAll(async () => {
+        console.log('afterAll');
         app.stop();
     });
+
     /*
       describe('## Create task ', function() {
         it('should create a task', function(done) {

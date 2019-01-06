@@ -8,8 +8,8 @@
         "url": "https://github.com/diegochavezcarro/ctrlaccesos-node.git"
     },
     "scripts": {
-        "test": "mocha --timeout 10000",
-        "test-coverage": "istanbul cover _mocha",
+        "test": "nyc --reporter=html --reporter=text mocha --timeout 10000",
+        
         "start": "nodemon ./server.js"
     },
     "dependencies": {
@@ -23,9 +23,9 @@
     },
     "devDependencies": {
         "chai": "^4.2.0",
-        "istanbul": "^0.4.5",
         "mocha": "^5.2.0",
         "nodemon": "^1.18.9",
+        "nyc": "^13.1.0",
         "supertest": "^3.3.0"
     }
 }

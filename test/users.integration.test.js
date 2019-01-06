@@ -42,9 +42,6 @@ describe('Ctrl Accesos API Tests', function () {
                 });
         });
         it('deberia mostrar los usuarios', function (done) {
-
-
-
             request(app)
                 .get('/users')
                 .set('Authorization', `Bearer ${token}`)
@@ -53,6 +50,26 @@ describe('Ctrl Accesos API Tests', function () {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body).to.be.an('array');
                     done();
+                });
+        });
+        it('deberia mostrar los usuarios para otro login', function (done) {
+            let token2;
+            request(app)
+                .post('/users/authenticate')
+                .send({ "username": "testa", "password": "testa" })
+                .end(function (err, res) {
+                    expect(res.statusCode).to.equal(200);
+                    expect(res.body.token).to.not.be.null;
+                    token2 = res.body.token;
+                    request(app)
+                        .get('/users')
+                        .set('Authorization', `Bearer ${token2}`)
+                        .end(function (err, res) {
+                            console.log(`Bearer ${token}`);
+                            expect(res.statusCode).to.equal(200);
+                            expect(res.body).to.be.an('array');
+                            done();
+                        });
                 });
 
         });

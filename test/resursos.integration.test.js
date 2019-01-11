@@ -11,7 +11,7 @@ describe('Ctrl Accesos API Tests - Recursos', function () {
         before((done) => {
             request(app)
                 .post('/users/authenticate')
-                .send({ "username": "test", "password": "test" })
+                .send({ "Username": "test", "Password": "test" })
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body.token).to.not.be.null;
@@ -20,25 +20,25 @@ describe('Ctrl Accesos API Tests - Recursos', function () {
                 });
         });
 
-        it('deberia dar error de autenticacion al no pasar token', function (done) {
-            request(app)
-                .get('/recursos/get')
-                .end(function (err, res) {
-                    expect(res.statusCode).to.equal(401);
-                    expect(res.body.message).to.equal('Invalid Token');
-                    done();
-                });
-        });
-        it('deberia dar error de autenticacion al pasar token erroneo', function (done) {
-            request(app)
-                .get('/recursos/get')
-                .set('Authorization', 'Bearer sarasa')
-                .end(function (err, res) {
-                    expect(res.statusCode).to.equal(401);
-                    expect(res.body.message).to.equal('Invalid Token');
-                    done();
-                });
-        });
+        // it('deberia dar error de autenticacion al no pasar token', function (done) {
+        //     request(app)
+        //         .get('/recursos/get')
+        //         .end(function (err, res) {
+        //             expect(res.statusCode).to.equal(401);
+        //             expect(res.body.message).to.equal('Invalid Token');
+        //             done();
+        //         });
+        // });
+        // it('deberia dar error de autenticacion al pasar token erroneo', function (done) {
+        //     request(app)
+        //         .get('/recursos/get')
+        //         .set('Authorization', 'Bearer sarasa')
+        //         .end(function (err, res) {
+        //             expect(res.statusCode).to.equal(401);
+        //             expect(res.body.message).to.equal('Invalid Token');
+        //             done();
+        //         });
+        // });
         it('deberia mostrar los recursos', function (done) {
             request(app)
                 .get('/recursos/get')

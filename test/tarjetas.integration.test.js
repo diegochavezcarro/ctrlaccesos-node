@@ -13,7 +13,7 @@ describe('Ctrl Accesos API Tests - Tarjetas', function () {
         before((done) => {
             request(app)
                 .post('/users/authenticate')
-                .send({ "username": "test", "password": "test" })
+                .send({ "Username": "test", "Password": "test" })
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body.token).to.not.be.null;

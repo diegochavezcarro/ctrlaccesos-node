@@ -3,8 +3,13 @@ const app = require('../server'),
     request = require('supertest');
 var expect = chai.expect;
 
+// const usersWhithoutPassword = [{ id: 1, username: 'test', firstName: 'Test', lastName: 'User' },
+// { id: 2, username: 'agustint', firstName: 'agustint', lastName: 'Usera' }];
+
 const usersWhithoutPassword = [{ id: 1, username: 'test', firstName: 'Test', lastName: 'User' },
-{ id: 2, username: 'testa', firstName: 'Testa', lastName: 'Usera' }];
+{ id: 2, username: 'testa', firstName: 'Testa', lastName: 'Usera' },
+{ id: 3, username: 'agustint', firstName: 'Agustin', lastName: 'Tamborelli' },
+{ id: 4, username: 'pablon', firstName: 'Pablo', lastName: 'Navarro' }];
 
 describe('Ctrl Accesos API Tests', function () {
     let token;
@@ -12,7 +17,7 @@ describe('Ctrl Accesos API Tests', function () {
         before((done) => {
             request(app)
                 .post('/users/authenticate')
-                .send({ "username": "test", "password": "test" })
+                .send({ "Username": "test", "Password": "test" })
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body.token).to.not.be.null;
@@ -56,7 +61,7 @@ describe('Ctrl Accesos API Tests', function () {
             let token2;
             request(app)
                 .post('/users/authenticate')
-                .send({ "username": "testa", "password": "testa" })
+                .send({ "Username": "testa", "Password": "testa" })
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body.token).to.not.be.null;
@@ -78,7 +83,7 @@ describe('Ctrl Accesos API Tests', function () {
         it('deberia devolver un token', function (done) {
             request(app)
                 .post('/users/authenticate')
-                .send({ "username": "test", "password": "test" })
+                .send({ "Username": "test", "Password": "test" })
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(200);
                     expect(res.body.token).to.not.be.null;
@@ -88,7 +93,7 @@ describe('Ctrl Accesos API Tests', function () {
         it('deberia devolver error 403 login invalido', function (done) {
             request(app)
                 .post('/users/authenticate')
-                .send({ "username": "tes", "password": "test" })
+                .send({ "Username": "tes", "Password": "test" })
                 .end(function (err, res) {
                     expect(res.statusCode).to.equal(403);
                     expect(res.body.message).to.equal('Username or password is incorrect');
